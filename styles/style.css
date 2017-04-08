@@ -1,6 +1,50 @@
-#div {
-	width: 100px;
-	height: 80px;
-	margin: 0 auto;
-	background-color: red;
+body {
+	background-image: url("../img/background.jpg");
+}
+#deck, #user, #comp, .trump {
+	position: absolute;
+}
+#deck {
+	top: 40%;
+	left: 10%;
+}
+#user, #comp {
+	/*border: 1px solid black;*/
+	display: flex;
+	justify-content: space-around;
+	left: 20%;
+	width: 60%;
+	height: 105px;
+}
+#user {
+	top: 70%;
+}
+#comp {
+	top: 10%;
+}
+
+#deck > div {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.trump {
+	top: 42%;
+	left: 21.5%;
+	transform: rotate(90deg);
+}
+.face-down, .face-up {
+	width: 75px;
+	height: 105px;
+	border-radius: 5px;
+	border: 1px solid #e8bbbb;
+}
+.face-down {
+	background-image: url("../img/card-back.png");
+	background-size: cover;
+	background-origin: border-box;
+}
+.face-up {
+	background-color: white;
 }
