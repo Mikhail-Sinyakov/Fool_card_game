@@ -1,95 +1,160 @@
-var deck = [];
-var fold = [];
-var userCard = [];
-var compCard = [];
-var Card = function(suit, face, value) {
-	this.suit = suit;
-	this.face = face;
-	this.value = value;
+var cards = document.getElementsByClassName("card");
+var deck = document.getElementById("deck");
+var user = document.getElementById("user");
+var comp = document.getElementById("comp");
+var field = document.getElementById("field");
+var discard = document.getElementById("discard");
+var trump = document.getElementById("trump");
+var deckCards = deck.children;
+var userCards = user.children;
+var compCards = comp.children;
+var fieldCards = field.children;
+var discardCards = discard.children;
+function createCards() {
+	var div;
+	var beforeLast = document.body.children[document.body.children.length - 1];
+	for (let i = 0; i < 36; i++) {
+		div = document.createElement("div");
+		document.body.insertBefore(div, beforeLast);
+		div.classList.add("card");
+	}
+	for (let i = 0; i < cards.length; i++) {
+		if (i % 4 === 0) {
+			cards[i].classList.add("heart");
+		}
+		else if (i % 4 === 1) {
+			cards[i].classList.add("diamond");
+		}
+		else if (i % 4 === 2) {
+			cards[i].classList.add("club");
+		}
+		else {
+			cards[i].classList.add("spade");
+		}
+		if (i % 9 === 0) {
+			cards[i].classList.add("ACE");
+			cards[i].value = 14;
+		}
+		else if (i % 9 === 1) {
+			cards[i].classList.add("KING");
+			cards[i].value = 13;
+		}
+		else if (i % 9 === 2) {
+			cards[i].classList.add("QUEEN");
+			cards[i].value = 12;
+		}
+		else if (i % 9 === 3) {
+			cards[i].classList.add("JACK");
+			cards[i].value = 11;
+		}
+		else if (i % 9 === 4) {
+			cards[i].classList.add("TEN");
+			cards[i].value = 10;
+		}
+		else if (i % 9 === 5) {
+			cards[i].classList.add("NINE");
+			cards[i].value = 9;
+		}
+		else if (i % 9 === 6) {
+			cards[i].classList.add("EIGHT");
+			cards[i].value = 8;
+		}
+		else if (i % 9 === 7) {
+			cards[i].classList.add("SEVEN");
+			cards[i].value = 7;
+		}
+		else {
+			cards[i].classList.add("SIX");
+			cards[i].value = 6;
+		}
+	}
 }
-for (var k = 0; k < 36; k++) {
-	deck[k] = new Card("", "", 0);
+function moveToDeck() {
+	for (let i = 0, len = cards.length; i < len; i++) {
+		deck.appendChild(cards[i]);
+		cards[i].classList.add("face-down");
+		cards[i].classList.add("disabled");
+	}
 }
-function initDeck() {
-	function addValueCards() {
-		for (var n = 0; n < 36; n++) {
-			if (n % 4 === 0) {
-				deck[n].suit = "heart";
+function shuffle() {
+	var random, len;
+	for (len = deckCards.length; len > 0; len--) {
+		random = Math.floor(Math.random() * len);
+		deck.insertBefore(deckCards[len - 1], deckCards[random]);
+		deck.insertBefore(deckCards[random + 1], deckCards[len]);
+	}
+	deck.lastElementChild.classList.toggle("enabled");
+	deck.lastElementChild.classList.toggle("disabled");
+}
+function firstDeal() {
+	function deal1Card (whom) {
+		whom.appendChild(deck.lastElementChild);
+	}
+	function createTrump () {
+		var trump = deck.insertBefore(deck.lastElementChild, deckCards[0]);
+		trump.id = "trump";
+		deck.firstElementChild.classList.toggle("face-up");
+		deck.firstElementChild.classList.toggle("face-down");
+		var trumpSuit = function() {
+			if (trump.classList.contains("spade")) {
+				return "spade";
 			}
-			else if (n % 4 === 1) {
-				deck[n].suit = "diamond";
+			else if (trump.classList.contains("heart")) {
+				return "heart";
 			}
-			else if (n % 4 === 2) {
-				deck[n].suit = "club";
+			else if (trump.classList.contains("club")) {
+				return "club";
 			}
-			else {
-				deck[n].suit = "spade";
+			else if (trump.classList.contains("diamond")) {
+				return "diamond";
 			}
-			if (n % 9 === 0) {
-				deck[n].face = "ACE";
-				deck[n].value = 14;
-			}
-			else if (n % 9 === 1) {
-				deck[n].face = "KING";
-				deck[n].value = 13;
-			}
-			else if (n % 9 === 2) {
-				deck[n].face = "QUEEN";
-				deck[n].value = 12;
-			}
-			else if (n % 9 === 3) {
-				deck[n].face = "JACK";
-				deck[n].value = 11;
-			}
-			else if (n % 9 === 4) {
-				deck[n].face = "10";
-				deck[n].value = 10;
-			}
-			else if (n % 9 === 5) {
-				deck[n].face = "9";
-				deck[n].value = 9;
-			}
-			else if (n % 9 === 6) {
-				deck[n].face = "8";
-				deck[n].value = 8;
-			}
-			else if (n % 9 === 7) {
-				deck[n].face = "7";
-				deck[n].value = 7;
-			}
-			else {
-				deck[n].face = "6";
-				deck[n].value = 6;
+		} 
+		for (let i = 0; i < cards.length; i++) {
+			if (cards[i].classList.contains(trumpSuit())) {
+			cards[i].value += 9;
 			}
 		}
-		return deck;
 	}
-	function shuffle () {
-		var random, buffer, len;
-		for (len = deck.length; len > 0; len--) {
-			random = Math.floor(Math.random() * len)
-			buffer = deck[len - 1];
-			deck[len - 1] = deck[random];
-			deck[random] = buffer;
+	function sort() {
+		var k = 0;
+		function minElem() {
+			var min = 25, index;
+			for (let i = 0; i < userCards.length - k; i++) {
+				if (i === 0) {
+					min = userCards[i].value;
+					index = i;
+				}
+				else if (userCards[i].value < min) {
+					min = userCards[i].value;
+					index = i;
+				}
+			}
+			return userCards[index];
 		}
-		return deck;
-	}
-	function createDivs () {
-		var deckElem = document.getElementById("deck");
-		var div;
-		for (var n = 0; n < deck.length; n++) {
-			div = document.createElement("div");
-			deckElem.appendChild(div);
-			div.classList.add("face-down");
+		while (k < userCards.length) {
+			user.appendChild(minElem());
+			k++;
 		}
+		
 	}
-	addValueCards();
+	deck.lastElementChild.classList.toggle("enabled");
+	deck.lastElementChild.classList.toggle("disabled");
+	for (let i = 0; i < 6; i++) {
+		deal1Card(user);
+		deal1Card(comp);
+	}
+	for (let i = 0; i < userCards.length; i++) {
+		userCards[i].classList.toggle("face-up");
+		userCards[i].classList.toggle("face-down");
+	}
+	createTrump();
+	sort();
+	deck.onclick = false;
+}
+window.onload = function() {
+	createCards();
+	moveToDeck();
 	shuffle();
-	createDivs();
 }
 
-
-window.onload = initDeck;
-
-
-
+deck.onclick = firstDeal;

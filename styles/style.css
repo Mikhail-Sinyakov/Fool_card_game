@@ -1,14 +1,21 @@
 body {
 	background-image: url("../img/background.jpg");
 }
-#deck, #user, #comp, .trump {
+.card.enabled:hover {
+	filter: brightness(80%);
+	cursor: pointer;
+}
+#user > .card.disabled {
+	filter: brightness(60%);
+}
+#deck, #user, #comp, #field, .trump {
 	position: absolute;
 }
 #deck {
 	top: 40%;
 	left: 10%;
 }
-#user, #comp {
+#user, #field, #comp {
 	/*border: 1px solid black;*/
 	display: flex;
 	justify-content: space-around;
@@ -19,19 +26,22 @@ body {
 #user {
 	top: 70%;
 }
+#field {
+	top: 35%;
+	height: 150px;
+}
 #comp {
 	top: 10%;
 }
-
 #deck > div {
 	position: absolute;
 	top: 0;
 	left: 0;
 }
-
-.trump {
-	top: 42%;
-	left: 21.5%;
+#deck > #trump {
+	position: absolute;
+	top: 10px;
+	left: 18px;
 	transform: rotate(90deg);
 }
 .face-down, .face-up {
@@ -46,5 +56,113 @@ body {
 	background-origin: border-box;
 }
 .face-up {
-	background-color: white;
+	background-image: url("../img/card-faces.png");
+}
+.face-up.spade.SIX {
+	background-position: 0 0;
+}
+.face-up.spade.SEVEN {
+	background-position: -100px 0;
+}
+.face-up.spade.EIGHT {
+	background-position: -200px 0;
+}
+.face-up.spade.NINE {
+	background-position: -300px 0;
+}
+.face-up.spade.TEN {
+	background-position: -400px 0;
+}
+.face-up.spade.JACK {
+	background-position: -500px 0;
+}
+.face-up.spade.QUEEN {
+	background-position: -600px 0;
+}
+.face-up.spade.KING {
+	background-position: -700px 0;
+}
+.face-up.spade.ACE {
+	background-position: -800px 0;
+}
+.face-up.heart.SIX {
+	background-position: 0 -115px;
+}
+.face-up.heart.SEVEN {
+	background-position: -100px -115px;
+}
+.face-up.heart.EIGHT {
+	background-position: -200px -115px;
+}
+.face-up.heart.NINE {
+	background-position: -300px -115px;
+}
+.face-up.heart.TEN {
+	background-position: -400px -115px;
+}
+.face-up.heart.JACK {
+	background-position: -500px -115px;
+}
+.face-up.heart.QUEEN {
+	background-position: -600px -115px;
+}
+.face-up.heart.KING {
+	background-position: -700px -115px;
+}
+.face-up.heart.ACE {
+	background-position: -800px -115px;
+}
+.face-up.club.SIX {
+	background-position: 0 -230px;
+}
+.face-up.club.SEVEN {
+	background-position: -100px -230px;
+}
+.face-up.club.EIGHT {
+	background-position: -200px -230px;
+}
+.face-up.club.NINE {
+	background-position: -300px -230px;
+}
+.face-up.club.TEN {
+	background-position: -400px -230px;
+}
+.face-up.club.JACK {
+	background-position: -500px -230px;
+}
+.face-up.club.QUEEN {
+	background-position: -600px -230px;
+}
+.face-up.club.KING {
+	background-position: -700px -230px;
+}
+.face-up.club.ACE {
+	background-position: -800px -230px;
+}
+.face-up.diamond.SIX {
+	background-position: 0 -345px;
+}
+.face-up.diamond.SEVEN {
+	background-position: -100px -345px;
+}
+.face-up.diamond.EIGHT {
+	background-position: -200px -345px;
+}
+.face-up.diamond.NINE {
+	background-position: -300px -345px;
+}
+.face-up.diamond.TEN {
+	background-position: -400px -345px;
+}
+.face-up.diamond.JACK {
+	background-position: -500px -345px;
+}
+.face-up.diamond.QUEEN {
+	background-position: -600px -345px;
+}
+.face-up.diamond.KING {
+	background-position: -700px -345px;
+}
+.face-up.diamond.ACE {
+	background-position: -800px -345px;
 }
