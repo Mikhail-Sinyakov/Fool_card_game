@@ -1,21 +1,32 @@
 body {
 	background-image: url("../img/background.jpg");
 }
-.card.enabled:hover {
+button {
+	position: absolute;
+	display: none;
+	background-color: cyan;
+	color: black;
+	top: 75%;
+	left: 85%;
+	padding: 5px 10px;
+	border-radius: 7px;
+}
+#deck > .card.enabled:hover,
+#user > .card.enabled:hover {
 	filter: brightness(80%);
 	cursor: pointer;
 }
 #user > .card.disabled {
 	filter: brightness(60%);
 }
-#deck, #user, #comp, #field, .trump {
+#deck, #user, #comp, #field1, #field2, .trump {
 	position: absolute;
 }
 #deck {
 	top: 40%;
 	left: 10%;
 }
-#user, #field, #comp {
+#user, #field1, #field2, #comp {
 	/*border: 1px solid black;*/
 	display: flex;
 	justify-content: space-around;
@@ -26,12 +37,23 @@ body {
 #user {
 	top: 70%;
 }
-#field {
+.empty {
+	width: 75px;
+	height: 105px;
+}
+#field1 {
 	top: 35%;
-	height: 150px;
+	height: 105px;
+}
+#field2 {
+	top: 40%;
+	height: 105px;
 }
 #comp {
 	top: 10%;
+}
+#discard {
+	display: none;
 }
 #deck > div {
 	position: absolute;
